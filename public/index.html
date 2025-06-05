@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Chat App</title>
+</head>
+<body>
+    <h1>Welcome to the Chat Room</h1>
+    <div id="chat-box"></div>
+    <input type="text" id="message" placeholder="Type a message..." />
+    <button onclick="sendMessage()">Send</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        function sendMessage() {
+            const msg = document.getElementById('message').value;
+            socket.emit('chat message', msg);
+        }
+
+        socket.on('chat message', (msg) => {
+            const box = document.getElementById('chat-box');
+            box.innerHTML += `<p>${msg}</p>`;
+        });
+    </script>
+</body>
+</html>
